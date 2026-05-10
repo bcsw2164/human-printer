@@ -5,7 +5,8 @@ const SYLLABLES = ['나', '는', '로', '봇', '이', '아', '닙', '니', '다'
 const FONT_SETS = ['001', '002', '003'];
 
 // 음절 등장 간격 (ms)
-const INTERVAL = 250;
+const VISUAL_INTERVAL = 400;
+const TTS_INTERVAL = 100;
 
 let voices = [];
 let isAnimating = false;
@@ -41,8 +42,8 @@ function speakSyllable(text) {
     const voice = getRandomVoice();
     if (voice) utterance.voice = voice;
 
-    utterance.pitch = 0.5 + Math.random() * 1.5; // 0.5 ~ 2.0
-    utterance.rate  = 0.7 + Math.random() * 0.7; // 0.7 ~ 1.4
+    utterance.pitch = 0.7 + Math.random() * 0.7; 
+    utterance.rate  = 0.7 + Math.random() * 0.7; 
 
     window.speechSynthesis.speak(utterance);
 }
@@ -76,21 +77,23 @@ function runAnimation() {
     const syllableEls = document.querySelectorAll('.syllable');
 
     syllableEls.forEach((el, index) => {
-        const timer = setTimeout(() => {
-            // 음절 표시 + TTS 동시 재생
+
+        const visualTimer = setTimeout(() => {
             el.classList.add('visible');
+        }, index * VISUAL_INTERVAL);
+
+        const ttsTimer = setTimeout(() => {
             speakSyllable(el.dataset.syllable);
+        }, index * TTS_INTERVAL);
 
-            // 마지막 음절 처리 후 isAnimating 해제
-            if (index === syllableEls.length - 1) {
-                const endTimer = setTimeout(() => {
-                    isAnimating = false;
-                }, 150); // fade-in transition 완료 대기
-                animationTimers.push(endTimer);
-            }
-        }, index * INTERVAL);
+        animationTimers.push(visualTimer, ttsTimer);
 
-        animationTimers.push(timer);
+        if (index === syllableEls.length - 1) {
+            const endTimer = setTimeout(() => {
+                isAnimating = false;
+            }, index * TTS_INTERVAL + 500);
+            animationTimers.push(endTimer);
+        }
     });
 }
 
