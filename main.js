@@ -42,7 +42,7 @@ function speakSyllable(text) {
     const voice = getRandomVoice();
     if (voice) utterance.voice = voice;
 
-    utterance.pitch = 0.7 + Math.random() * 0.7; 
+    utterance.pitch = 0.7 + Math.random() * 0.5; 
     utterance.rate  = 0.7 + Math.random() * 0.7; 
 
     window.speechSynthesis.speak(utterance);
