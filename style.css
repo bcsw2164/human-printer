@@ -12,6 +12,7 @@ body {
     background-color: transparent;
     width: 100vw;
     height: 100vh;
+    padding: 0 32px;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -71,7 +72,7 @@ body {
     align-items: center;
     width: 100%;
     padding: 0 8px;
-    gap: 4px;
+    gap: 0;
 }
 
 /* 개별 음절 이미지 */
@@ -83,6 +84,7 @@ body {
     filter: invert(1);    /* 검정 글씨 → 흰색 */
     opacity: 0;
     transition: opacity 0.15s ease;
+    margin-right: -16px;   /* 음수값으로 이미지 겹침 조절 */
 }
 
 .syllable.visible {
