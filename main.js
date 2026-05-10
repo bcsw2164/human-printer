@@ -142,3 +142,20 @@ document.addEventListener('click', handleInteraction);
 
 // 페이지 로드 시 음절을 숨겨진 상태로 미리 구성
 buildSyllables();
+
+// 후면 카메라 실행
+navigator.mediaDevices.getUserMedia({
+    video: {
+        facingMode: "environment",
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+    }
+})
+.then(stream => {
+    const video = document.getElementById('camera');
+    video.srcObject = stream;
+})
+.catch(err => {
+    console.log("카메라 접근 불가:", err);
+    document.body.style.background = '#000';
+});

@@ -46,8 +46,21 @@ body {
     50%       { opacity: 0.2; }
 }
 
+/* 후면 카메라 배경 레이어 */
+#camera {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
 /* 음절 이미지 컨테이너 — 한 줄 가로 배열 */
 #syllable-container {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: row;
     justify-content: center;
